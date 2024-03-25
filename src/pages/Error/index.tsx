@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import colors from '../../utils/style/color'
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const ErrorWrapper = styled.main`
 color: ${colors.primary};
@@ -36,6 +37,9 @@ margin-bottom: 4rem;
 `
 
 function Error() {
+    useEffect(() =>{
+        document.title = 'Kasa - Erreur'
+    })
     return(
         <ErrorWrapper>
             <TitleError>404</TitleError>

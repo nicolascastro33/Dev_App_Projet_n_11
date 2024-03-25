@@ -24,21 +24,20 @@ const LinkWrapper = styled.nav`
 `
 
 const LinkNav = styled(Link)`
-  font-size: 1.2rem;;
+  font-size: 1.2rem;
   color: ${colors.black};
   font-weight: 500;
   &:hover {
     text-decoration: underline;
   }
-  ${(props) => props.$isFullLink && `text-decoration: underline;`}
-  @media(max-width:768px){
-    text-transform:uppercase;
+  ${(props) => props.isFullLink && `text-decoration: underline;`}
+  @media(max-width:768px) {
+    text-transform: uppercase;
   }
 `
 
 function Header() {
   const url = useLocation()
-  console.log(url.pathname)
   return (
     <>
       <HeaderWrapper>
@@ -47,21 +46,16 @@ function Header() {
         </Link>
 
         <LinkWrapper>
-          {url.pathname === '/' ? (
-            <LinkNav to="/" $isFullLink>
-              Accueil
-            </LinkNav>
-          ) : (
-            <LinkNav to="/">Accueil</LinkNav>
-          )}
+          <LinkNav to="/" isFullLink={url.pathname === '/' ? true : false}>
+            Accueil
+          </LinkNav>
 
-          {url.pathname === '/about' ? (
-            <LinkNav to="/about" $isFullLink>
-              À propos
-            </LinkNav>
-          ) : (
-            <LinkNav to="/about">À propos</LinkNav>
-          )}
+          <LinkNav
+            to="/about"
+            isFullLink={url.pathname === '/about' ? true : false}
+          >
+            À propos
+          </LinkNav>
         </LinkWrapper>
       </HeaderWrapper>
     </>
