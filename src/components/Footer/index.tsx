@@ -9,7 +9,7 @@ const FooterWrapper = styled.footer`
   align-items: center;
   background-color: ${colors.black};
   min-height: 160px;
-  padding-top: 50px
+  padding: 30px 0 20px 0;
 `
 
 const LogoImg = styled.img`
@@ -19,8 +19,13 @@ const LogoImg = styled.img`
 
 const TextWrapper = styled.h2`
   color: ${colors.white};
+  text-align:center;
   font-size: 1.2rem;
   font-weight: 500;
+  @media(max-width:768px) {
+    font-size: 0.8rem;
+    width:35%;
+  }
 `
 
 function Footer() {

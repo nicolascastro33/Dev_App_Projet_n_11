@@ -14,6 +14,9 @@ const AboutWrapper = styled.main`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  @media(max-width:768px) {
+    margin: 0px 20px 0px 20px;
+  }
 `
 
 const ImgWrapper = styled.div`
@@ -24,7 +27,7 @@ const ImgWrapper = styled.div`
   height: 223px;
   margin-bottom: 50px;
   & img {
-    width: 100%;
+    min-width: 100%;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -34,13 +37,16 @@ const ImgWrapper = styled.div`
 
 const AllCollapseWrapper = styled.div`
   width: 75%;
+  @media (max-width: 1200px) {
+    width: 100%;
+  }
 `
 
 function About() {
   useEffect(() => {
     document.title = 'Kasa - À Propos'
   })
-  
+
   return (
     <>
       <AboutWrapper>
