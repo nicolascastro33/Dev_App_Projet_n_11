@@ -27,20 +27,21 @@ const TextTitle = styled.h2`
   font-size: 20px;
 `
 
-const ImgTitle = styled.img`
+const ImgTitle = styled.img<{ $isOpen?: boolean }>`
   transform: rotate(180deg);
   transition: transform 500ms ease-in-out;
   width: 24px;
   cursor: pointer;
   ${(props) =>
-    props.isOpen &&
+    props.$isOpen &&
     `
         transform: rotate(0);
         transition: transform 500ms ease-in-out;
         `}
 `
 
-const TextContentWrapper = styled.div`
+
+const TextContentWrapper = styled.div<StyledProps>`
   z-index: 1;
   border: 1px solid ${colors.primary};
   border-top: none;
@@ -53,7 +54,7 @@ const TextContentWrapper = styled.div`
   transition: all 500ms ease-in-out;
   opacity: 0;
   ${(props) =>
-    props.isOpen &&
+    props.$isOpen &&
     `
         transform: translateY(0);
         transition: all 500ms ease-in-out;
@@ -61,17 +62,26 @@ const TextContentWrapper = styled.div`
         max-height: 600px;
         `}
   ${(props) =>
-    props.isFlatPage &&
+    props.$isflatPage &&
     `
         min-height: 400px;
     `}
 `
+interface CollapseProps{
+  title:string;
+  text: string[] | string;
+}
+interface StyledProps {
+  readonly  $isOpen?: boolean;
+  readonly $isflatPage?:boolean;
+}
 
-function Collapse({ title, description }) {
+function Collapse({ title, text }:CollapseProps) {
   const url = useLocation()
   const flatPage: boolean = url.pathname.includes('flat')
   const [collapse, setCollapse] = useState(false)
-  const isArray: boolean = Array.isArray(description)
+  const isArray: boolean = Array.isArray(text)
+
   return (
     <>
       <CollapseWrapper>
@@ -79,18 +89,18 @@ function Collapse({ title, description }) {
           <TextTitle>{title}</TextTitle>
           <ImgTitle
             src={Arrow}
-            isOpen={collapse}
+            $isOpen={collapse}
             onClick={() => setCollapse(!collapse)}
           />
         </TitleWrapper>
 
-        <TextContentWrapper isOpen={collapse} isflatPage={flatPage}>
+        <TextContentWrapper  $isflatPage={flatPage} $isOpen={collapse}>
           {isArray ? (
-            description.map((des: string, index: string) => (
+            text?.map((des: string, index: string) => (
               <p key={index}>{des}</p>
             ))
           ) : (
-            <p>{description}</p>
+            <p>{text}</p>
           )}
         </TextContentWrapper>
       </CollapseWrapper>

@@ -33,7 +33,6 @@ function Footer() {
     <>
       <FooterWrapper>
         <LogoImg src={Logo} />
-
         <TextWrapper>© 2020 Kasa. All rights reserved</TextWrapper>
       </FooterWrapper>
     </>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Card from '../../components/Card'
 import image from '../../assets/homeIllustration.png'
 import styled from 'styled-components'
@@ -9,8 +9,6 @@ const HomeWrapper = styled.main`
   margin: 0px 100px 50px 100px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
   @media(max-width:768px) {
     margin: 0px 20px 50px 20px;
   }
@@ -65,9 +63,6 @@ const AllFlatWrapper = styled.div`
 `
 
 function Home() {
-  // const [flatData, setFlatData] = useState([])
-  // const [dataLoading, setDataLoading] = useState<boolean>(false)
-
   useEffect(() => {
     document.title = 'Kasa - Bienvenue!'
   })

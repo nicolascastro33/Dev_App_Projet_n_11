@@ -44,7 +44,7 @@ const LinkNav = styled(Link)`
     text-decoration: underline;
     font-weight: bold;
   }
-  ${(props) => props.isFullLink && `text-decoration: underline;`}
+  ${(props) => props.$isFullLink && `text-decoration: underline;`}
   @media(max-width:768px) {
     text-transform: uppercase;
     font-size: 1rem;
@@ -61,13 +61,13 @@ function Header() {
         </Link>
 
         <LinkWrapper>
-          <LinkNav to="/" isFullLink={url.pathname === '/' ? true : false}>
+          <LinkNav to="/" $isFullLink={url.pathname === '/' ? true : false}>
             Accueil
           </LinkNav>
 
           <LinkNav
             to="/about"
-            isFullLink={url.pathname === '/about' ? true : false}
+            $isFullLink={url.pathname === '/about' ? true : false}
           >
             À propos
           </LinkNav>

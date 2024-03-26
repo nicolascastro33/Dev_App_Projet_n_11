@@ -54,7 +54,14 @@ const TextContentWrapper = styled.div`
   }
 `
 
-function Card({ title, image, id }) {
+interface CardProps{
+  title:string;
+  image:string;
+  id:string
+}
+
+
+function Card({ title, image, id }:CardProps) {
   return (
     <>
       <Link to={`/flat/${id}`}>
