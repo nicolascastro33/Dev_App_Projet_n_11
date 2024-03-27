@@ -4,14 +4,13 @@ import styled from 'styled-components'
 import image from '../../assets/aboutIllustration.png'
 import { useEffect } from 'react'
 
-
 const AboutWrapper = styled.main`
   margin: 0px 100px 0px 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  @media(max-width:768px) {
+  @media (max-width: 768px) {
     margin: 0px 20px 0px 20px;
   }
 `
@@ -56,7 +55,7 @@ function About() {
             <Collapse
               key={`about-${element.name}-${index}`}
               title={element.name}
-              text={element.description}
+              body={element.description}
             />
           ))}
         </AllCollapseWrapper>

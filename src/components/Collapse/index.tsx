@@ -22,12 +22,12 @@ const TitleWrapper = styled.div`
   z-index: 2;
 `
 
-const TextTitle = styled.h2`
+const Title = styled.h2`
   color: ${colors.white};
   font-size: 20px;
 `
 
-const ImgTitle = styled.img<{ $isOpen?: boolean }>`
+const Icon = styled.img<{ $isOpen?: boolean }>`
   transform: rotate(180deg);
   transition: transform 500ms ease-in-out;
   width: 24px;
@@ -40,8 +40,7 @@ const ImgTitle = styled.img<{ $isOpen?: boolean }>`
         `}
 `
 
-
-const TextContentWrapper = styled.div<StyledProps>`
+const Body = styled.div<StyledProps>`
   z-index: 1;
   border: 1px solid ${colors.primary};
   border-top: none;
@@ -51,13 +50,18 @@ const TextContentWrapper = styled.div<StyledProps>`
   padding: 0 10px 0 10px;
   transform: translateY(-300px);
   max-height: 0px;
-  transition: all 500ms ease-in-out;
+  transition: transform 500ms ease-in-out, max-height 500ms ease-in-out,
+    opacity 500ms ease-in-out;
+
   opacity: 0;
   ${(props) =>
     props.$isOpen &&
     `
         transform: translateY(0);
-        transition: all 500ms ease-in-out;
+        transition: 
+        transform 500ms ease-in-out,
+        max-height 500ms ease-in-out,
+        opacity 500ms ease-in-out;
         opacity: 1;
         max-height: 600px;
         `}
@@ -67,44 +71,38 @@ const TextContentWrapper = styled.div<StyledProps>`
         min-height: 400px;
     `}
 `
-interface CollapseProps{
-  title:string;
-  text: string[] | string;
+interface CollapseProps {
+  title: string
+  body: string[] | string
 }
 interface StyledProps {
-  readonly  $isOpen?: boolean;
-  readonly $isflatPage?:boolean;
+  readonly $isOpen?: boolean
+  readonly $isflatPage?: boolean
 }
 
-function Collapse({ title, text }:CollapseProps) {
+function Collapse({ title, body }: CollapseProps) {
   const url = useLocation()
   const flatPage: boolean = url.pathname.includes('flat')
   const [collapse, setCollapse] = useState(false)
-  const isArray: boolean = Array.isArray(text)
+  body = Array.isArray(body) ? body : [body]
 
   return (
-    <>
       <CollapseWrapper>
         <TitleWrapper>
-          <TextTitle>{title}</TextTitle>
-          <ImgTitle
+          <Title>{title}</Title>
+          <Icon
             src={Arrow}
             $isOpen={collapse}
             onClick={() => setCollapse(!collapse)}
           />
         </TitleWrapper>
 
-        <TextContentWrapper  $isflatPage={flatPage} $isOpen={collapse}>
-          {isArray ? (
-            text?.map((des: string, index: string) => (
-              <p key={index}>{des}</p>
-            ))
-          ) : (
-            <p>{text}</p>
-          )}
-        </TextContentWrapper>
+        <Body $isflatPage={flatPage} $isOpen={collapse}>
+          {body.map((text: string, index: number) => (
+            <p key={index}>{text}</p>
+          ))}
+        </Body>
       </CollapseWrapper>
-    </>
   )
 }
 

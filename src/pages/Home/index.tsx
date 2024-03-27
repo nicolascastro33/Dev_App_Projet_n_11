@@ -3,7 +3,7 @@ import Card from '../../components/Card'
 import image from '../../assets/homeIllustration.png'
 import styled from 'styled-components'
 import colors from '../../utils/style/color'
-import Flat from '../../data/flat.json'
+import flats from '../../data/flat.json'
 
 const HomeWrapper = styled.main`
   margin: 0px 100px 50px 100px;
@@ -74,12 +74,12 @@ function Home() {
           <h1>Chez vous, partout et ailleurs</h1>
         </ImgWrapper>
         <AllFlatWrapper>
-          {Flat.map((element, index) => (
+          {flats.map((flat, index) => (
             <Card
-              key={`flat-${index}-${element.id}`}
-              title={element.title}
-              image={element.cover}
-              id={element.id}
+              key={`flat-${index}-${flat.id}`}
+              title={flat.title}
+              image={flat.cover}
+              id={flat.id}
             />
           ))}
         </AllFlatWrapper>
