@@ -20,6 +20,7 @@ const TitleWrapper = styled.div`
   align-items: center;
   height: 52px;
   z-index: 2;
+  cursor: pointer;
 `
 
 const Title = styled.h2`
@@ -31,7 +32,6 @@ const Icon = styled.img<{ $isOpen?: boolean }>`
   transform: rotate(180deg);
   transition: transform 500ms ease-in-out;
   width: 24px;
-  cursor: pointer;
   ${(props) =>
     props.$isOpen &&
     `
@@ -67,8 +67,11 @@ const Body = styled.div<StyledProps>`
         `}
   ${(props) =>
     props.$isflatPage &&
+    props.$isOpen &&
     `
-        min-height: 400px;
+        min-height: 200px;
+        transition: 
+        min-height 500ms ease-in-out,
     `}
 `
 interface CollapseProps {
@@ -87,22 +90,18 @@ function Collapse({ title, body }: CollapseProps) {
   body = Array.isArray(body) ? body : [body]
 
   return (
-      <CollapseWrapper>
-        <TitleWrapper>
-          <Title>{title}</Title>
-          <Icon
-            src={Arrow}
-            $isOpen={collapse}
-            onClick={() => setCollapse(!collapse)}
-          />
-        </TitleWrapper>
+    <CollapseWrapper>
+      <TitleWrapper onClick={() => setCollapse(!collapse)}>
+        <Title>{title}</Title>
+        <Icon src={Arrow} $isOpen={collapse} />
+      </TitleWrapper>
 
-        <Body $isflatPage={flatPage} $isOpen={collapse}>
-          {body.map((text: string, index: number) => (
-            <p key={index}>{text}</p>
-          ))}
-        </Body>
-      </CollapseWrapper>
+      <Body $isflatPage={flatPage} $isOpen={collapse}>
+        {body.map((text: string, index: number) => (
+          <p key={index}>{text}</p>
+        ))}
+      </Body>
+    </CollapseWrapper>
   )
 }
 
