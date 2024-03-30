@@ -10,24 +10,22 @@ function Home() {
     document.title = 'Kasa - Bienvenue!'
   })
   return (
-    <>
-      <HomeWrapper>
-        <ImgWrapper>
-          <img src={image} alt="photo d'un paysage" />
-          <h1>Chez vous, partout et ailleurs</h1>
-        </ImgWrapper>
-        <AllFlatWrapper>
-          {flats.map((flat, index) => (
-            <Card
-              key={`flat-${index}-${flat.id}`}
-              title={flat.title}
-              image={flat.cover}
-              id={flat.id}
-            />
-          ))}
-        </AllFlatWrapper>
-      </HomeWrapper>
-    </>
+    <HomeWrapper>
+      <ImgWrapper>
+        <img src={image} alt="photo d'un paysage" />
+        <h1>Chez vous, partout et ailleurs</h1>
+      </ImgWrapper>
+      <AllFlatWrapper>
+        {flats.map((flat, index) => (
+          <Card
+            key={`flat-${index}-${flat.id}`}
+            title={flat.title}
+            image={flat.cover}
+            id={flat.id}
+          />
+        ))}
+      </AllFlatWrapper>
+    </HomeWrapper>
   )
 }
 

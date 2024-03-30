@@ -10,23 +10,21 @@ function About() {
   })
 
   return (
-    <>
-      <AboutWrapper>
-        <ImgWrapper>
-          <img src={image} alt="photo d'un paysage" />
-        </ImgWrapper>
+    <AboutWrapper>
+      <ImgWrapper>
+        <img src={image} alt="photo d'un paysage" />
+      </ImgWrapper>
 
-        <AllCollapseWrapper>
-          {InfoAbout.map((element, index) => (
-            <Collapse
-              key={`about-${element.name}-${index}`}
-              title={element.name}
-              body={element.description}
-            />
-          ))}
-        </AllCollapseWrapper>
-      </AboutWrapper>
-    </>
+      <AllCollapseWrapper>
+        {InfoAbout.map((element, index) => (
+          <Collapse
+            key={`about-${element.name}-${index}`}
+            title={element.name}
+            body={element.description}
+          />
+        ))}
+      </AllCollapseWrapper>
+    </AboutWrapper>
   )
 }
 

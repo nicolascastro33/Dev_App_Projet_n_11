@@ -11,18 +11,16 @@ interface CardProps{
 
 function Card({ title, image, id }:CardProps) {
   return (
-    <>
-      <Link to={`/flat/${id}`}>
-        <CardContainer>
-          <ImgWrapper>
-            <img src={image} alt={`photo-appartement-${title}`} />
-          </ImgWrapper>
-          <TextContentWrapper>
-            <h2>{title}</h2>
-          </TextContentWrapper>
-        </CardContainer>
-      </Link>
-    </>
+    <Link to={`/flat/${id}`}>
+      <CardContainer>
+        <ImgWrapper>
+          <img src={image} alt={`photo-appartement-${title}`} />
+        </ImgWrapper>
+        <TextContentWrapper>
+          <h2>{title}</h2>
+        </TextContentWrapper>
+      </CardContainer>
+    </Link>
   )
 }
 

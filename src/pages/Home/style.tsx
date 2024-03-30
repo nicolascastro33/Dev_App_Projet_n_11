@@ -5,8 +5,8 @@ export const HomeWrapper = styled.main`
   margin: 0px 100px 50px 100px;
   display: flex;
   flex-direction: column;
-  @media(max-width:768px) {
-    margin: 0px 20px 50px 20px;
+  @media (max-width: 768px) {
+    margin: 0px 20px 30px 20px;
   }
 `
 
@@ -17,8 +17,12 @@ export const ImgWrapper = styled.div`
   border-radius: 20px;
   height: 223px;
   margin-bottom: 50px;
+  @media(max-width:768px) {
+    height: 111px;
+    margin-bottom: 20px;
+  }
   & img {
-    min-width:100%;
+    min-width: 100%;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -33,7 +37,12 @@ export const ImgWrapper = styled.div`
     transform: translate(-50%, -50%);
     color: ${colors.white};
     font-size: 2rem;
-    text-align:center;
+    text-align: center;
+    @media (max-width: 768px) {
+      text-align: start;
+      left: 35%;
+      width: 60%;
+    }
   }
   @media (max-width: 768px) {
     & h1 {
@@ -51,6 +60,8 @@ export const AllFlatWrapper = styled.div`
   border-radius: 20px;
   @media (max-width: 1200px) {
     grid-template-columns: 1fr 1fr;
+    background-color: transparent;
+    padding: 0;
   }
 
   @media (max-width: 768px) {

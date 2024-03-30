@@ -2,13 +2,13 @@ import styled from 'styled-components'
 
 
 export const AboutWrapper = styled.main`
-  margin: 0px 100px 0px 100px;
+  margin: 0px 100px 30px 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   @media (max-width: 768px) {
-    margin: 0px 20px 0px 20px;
+    margin: 0px 20px 20px 20px;
   }
 `
 
@@ -19,6 +19,10 @@ export const ImgWrapper = styled.div`
   border-radius: 20px;
   height: 223px;
   margin-bottom: 50px;
+  @media(max-width:768px) {
+    height: 111px;
+    margin-bottom: 20px;
+  }
   & img {
     width: 100%;
     position: absolute;
