@@ -32,11 +32,11 @@ const LinkWrapper = styled.nav`
     width: 30%;
   }
   @media(max-width:768px) {
-    width: 50%;
+    width: 45%;
   }
 `
 
-const LinkNav = styled(Link)`
+const LinkNav = styled(Link)<StyledProps>`
   font-size: 1.2rem;
   color: ${colors.black};
   font-weight: 500;
@@ -47,9 +47,13 @@ const LinkNav = styled(Link)`
   ${(props) => props.$isFullLink && `text-decoration: underline;`}
   @media(max-width:768px) {
     text-transform: uppercase;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 `
+
+interface StyledProps {
+  readonly $isFullLink?: boolean
+}
 
 function Header() {
   const url = useLocation()
@@ -61,13 +65,13 @@ function Header() {
         </Link>
 
         <LinkWrapper>
-          <LinkNav to="/" $isFullLink={url.pathname === '/' ? true : false}>
+          <LinkNav to="/" $isFullLink={url.pathname === '/'}>
             Accueil
           </LinkNav>
 
           <LinkNav
             to="/about"
-            $isFullLink={url.pathname === '/about' ? true : false}
+            $isFullLink={url.pathname === '/about'}
           >
             À propos
           </LinkNav>

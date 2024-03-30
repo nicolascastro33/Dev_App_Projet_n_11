@@ -1,44 +1,13 @@
-import styled from 'styled-components'
-import arrow from '../../assets/arrowCarousel.png'
+import arrowRight from '../../assets/arrowCarouselRight.png'
+import arrowLeft from '../../assets/arrowCarouselLeft.png'
 import { useState } from 'react'
-import colors from '../../utils/style/color'
+import { CarouselWrapper, Picture, ArrowWrapper } from './style'
 
-const CarouselWrapper = styled.article`
-  position: relative;
-  overflow: hidden;
-  border-radius: 20px;
-  height: 415px;
-  & p {
-    position: absolute;
-    left: 50%;
-    bottom: 5%;
-    font-weight: bold;
-    color: ${colors.white}
-  }
-`
+interface CarouselProps {
+  pictures: string[]
+}
 
-const Picture = styled.img`
-  min-width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`
-
-const Arrow = styled.img`
-  position: absolute;
-  top: 40%;
-  cursor: pointer;
-  &:nth-child(2n) {
-    left: 5%;
-    transform: rotate(180deg);
-  }
-  &:nth-child(1n) {
-    right: 5%;
-  }
-`
-
-function Carousel({ pictures }) {
+function Carousel({ pictures }: CarouselProps) {
   const [picture, setPicture] = useState(0)
   const nextPicture = picture === pictures.length - 1 ? 0 : picture + 1
   const previousPicture = picture === 0 ? pictures.length - 1 : picture - 1
@@ -47,10 +16,15 @@ function Carousel({ pictures }) {
       <Picture src={pictures[picture]} alt="picture of the flat" />
       {pictures.length > 1 && (
         <>
-          <Arrow src={arrow} alt="previous picture" onClick={() => setPicture(previousPicture)} />
-          <Arrow src={arrow} alt="next picture" onClick={() => setPicture(nextPicture)}/>
+          <ArrowWrapper onClick={() => setPicture(previousPicture)}>
+            <img src={arrowLeft} alt="previous picture" />
+          </ArrowWrapper>
+
+          <ArrowWrapper onClick={() => setPicture(nextPicture)}>
+            <img src={arrowRight} alt="next picture" />
+          </ArrowWrapper>
           <p>
-            {picture + 1}/{pictures.length }
+            {picture + 1}/{pictures.length}
           </p>
         </>
       )}
