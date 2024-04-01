@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 export const FlatWrapper = styled.main`
   margin: 0 100px 50px 100px;
+  min-height: 50vh;
   @media (max-width: 768px) {
     margin: 0 20px 50px 20px;
   }

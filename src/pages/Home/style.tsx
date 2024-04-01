@@ -2,9 +2,11 @@ import styled from 'styled-components'
 import colors from '../../utils/style/color'
 
 export const HomeWrapper = styled.main`
+  position: relative;
   margin: 0px 100px 50px 100px;
   display: flex;
   flex-direction: column;
+  min-height: 50vh;
   @media (max-width: 768px) {
     margin: 0px 20px 30px 20px;
   }
@@ -17,7 +19,7 @@ export const ImgWrapper = styled.div`
   border-radius: 20px;
   height: 223px;
   margin-bottom: 50px;
-  @media(max-width:768px) {
+  @media (max-width: 768px) {
     height: 111px;
     margin-bottom: 20px;
   }
@@ -67,4 +69,10 @@ export const AllFlatWrapper = styled.div`
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
+`
+
+export const NoFlatWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items; center;
 `

@@ -7,7 +7,7 @@ import { AboutWrapper, ImgWrapper, AllCollapseWrapper } from './style'
 function About() {
   useEffect(() => {
     document.title = 'Kasa - À Propos'
-  })
+  }, [])
 
   return (
     <AboutWrapper>

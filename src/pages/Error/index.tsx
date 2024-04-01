@@ -4,7 +4,7 @@ import { ErrorWrapper, TitleError, MessageError, LinkError } from './style'
 function Error() {
     useEffect(() =>{
         document.title = 'Kasa - Erreur'
-    })
+    }, [])
     return(
         <ErrorWrapper>
             <TitleError>404</TitleError>
