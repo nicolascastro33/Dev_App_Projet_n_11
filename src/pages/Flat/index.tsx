@@ -19,13 +19,12 @@ import {
 
 function Flat() {
   const id = useLocation().pathname.slice(6)
-  const flat = flats.find((element) => element.id === id)  
+  const flat = flats.find((element) => element.id === id)
   const navigate = useNavigate()
-  useEffect(() =>{
-    if (!flat) navigate("/error")
+  useEffect(() => {
+    if (!flat) navigate('/error')
     document.title = `Kasa - Appartement de ${flat?.host.name}`
-})
-
+  })
 
   const rating = []
   for (let i = 0; i < 5; i++) {
