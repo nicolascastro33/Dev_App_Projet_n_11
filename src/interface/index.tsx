@@ -1,4 +1,4 @@
-export interface FlatsProps {
+export interface FlatProps {
   id: string
   title: string
   cover: string

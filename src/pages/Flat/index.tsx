@@ -1,10 +1,10 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { FlatsProps } from '../../interface'
+import { FlatProps } from '../../interface'
 import Carousel from '../../components/Carousel'
 import Collapse from '../../components/Collapse'
 import EmptyStar from '../../assets/emptyStar.png'
-import { dependencies } from '../../auth/dependencies'
+import { useDependencies } from '../../auth/context'
 import Star from '../../assets/fullStar.png'
 import {
   FlatWrapper,
@@ -21,7 +21,8 @@ import { Loader } from '../../utils/style/loader'
 
 function Flat() {
   const [isDataLoading, setDataLoading] = useState(false)
-  const [flatData, setFlatData] = useState<FlatsProps | undefined>()
+  const [flatData, setFlatData] = useState<FlatProps | undefined>()
+  const { flatService } = useDependencies()
   const id = useLocation().pathname.slice(6)
   const navigate = useNavigate()
 
@@ -29,10 +30,8 @@ function Flat() {
     async function fetchData() {
       setDataLoading(true)
       try {
-        const response = await dependencies.flatsService.data()
-        const flat = response?.find((element) => element.id === id)
-        await setFlatData(flat)
-        document.title = `Kasa - Appartement de ${flatData?.host.name}`
+        const flat = await flatService.fetchOneFlat(id)
+        setFlatData(flat)
         if (!flat) {
           navigate('/error')
           document.title = `Kasa - Erreur`
@@ -45,7 +44,9 @@ function Flat() {
       }
     }
     fetchData()
-  }, [flatData, id, navigate])
+    document.title = `Kasa - Appartement de ${flatData?.host.name}`
+  }, [flatData, id, navigate, flatService])
+
   const rating = []
   for (let i = 0; i < 5; i++) {
     rating.push(rating.length < Number(flatData?.rating) ? Star : EmptyStar)

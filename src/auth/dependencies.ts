@@ -1,10 +1,10 @@
-import { FlatsService } from "./auth.service";
-import { AuthAPI } from "./auth.api";
+import { FlatsJsonService } from "./auth.service";
+import { FlatJsonFile } from "./auth.api";
 
 export type Dependencies = {
-    flatsService: FlatsService
+    flatService: FlatsJsonService
 }
 
 export const dependencies: Dependencies = {
-    flatsService: AuthAPI
+    flatService: FlatJsonFile
 }
