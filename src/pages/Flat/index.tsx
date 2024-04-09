@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { FlatProps } from '../../interface'
+import { FlatProps } from '../../utils/interface'
 import Carousel from '../../components/Carousel'
 import Collapse from '../../components/Collapse'
 import EmptyStar from '../../assets/emptyStar.png'
@@ -30,7 +30,7 @@ function Flat() {
     async function fetchData() {
       setDataLoading(true)
       try {
-        const flat = await flatService.fetchOneFlat(id)
+        const flat = await flatService.FetchOneFlat(id)
         setFlatData(flat)
         if (!flat) {
           navigate('/error')

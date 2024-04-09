@@ -2,7 +2,7 @@ import Proptypes from 'prop-types'
 import Image from '../../assets/homeIllustration.png'
 import { Link } from 'react-router-dom'
 import { CardContainer, ImgWrapper, TextContentWrapper } from './style'
-import { CardProps } from '../../interface'
+import { CardProps } from '../../utils/interface'
 
 function Card({ title, image, id }: CardProps) {
   return (

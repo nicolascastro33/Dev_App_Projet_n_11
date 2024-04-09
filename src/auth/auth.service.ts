@@ -1,11 +1,11 @@
-import { FlatProps } from '../interface'
+import { FlatProps } from '../utils/interface'
 
 export type FlatsJsonService = {
-  fetchAllFlats(): Promise<FlatProps[] | undefined>
-  fetchOneFlat(flatId: string): Promise<FlatProps | undefined>
+  FetchAllFlats(): Promise<FlatProps[] | undefined>
+  FetchOneFlat(flatId: string): Promise<FlatProps | undefined>
 }
 
 export type FlatsApiService = {
-  fetchAllFlats(): Promise<Response|undefined>
-  fetchOneFlat(flatId: string): Promise<Response|undefined>
+  FetchAllFlats(): Promise<void | FlatProps[]>
+  FetchOneFlat(flatId: string): Promise<void | FlatProps>
 }

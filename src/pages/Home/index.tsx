@@ -3,7 +3,7 @@ import Card from '../../components/Card'
 import image from '../../assets/homeIllustration.png'
 import { HomeWrapper, ImgWrapper, AllFlatWrapper, NoFlatWrapper } from './style'
 import { Loader } from '../../utils/style/loader'
-import { FlatProps } from '../../interface'
+import { FlatProps } from '../../utils/interface'
 import { useDependencies } from '../../auth/context'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,11 +12,12 @@ function Home() {
   const [flatsData, setFlatsData] = useState<FlatProps[] | []>([])
   const { flatService } = useDependencies()
   const navigate = useNavigate()
-
+  console.log(import.meta.env.VITE_REACT_API_URL);
+  
   const fetchData = useCallback(async () => {
     setDataLoading(true)
     try {
-      const response = await flatService.fetchAllFlats()
+      const response = await flatService.FetchAllFlats()
       response === undefined ? setFlatsData([]) : setFlatsData(response)
     } catch (err) {
       navigate('/error')

@@ -29,12 +29,12 @@ export const LinkWrapper = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 25%;
+  gap: 40px;
   @media(max-width:1200px) {
-    width: 30%;
+    gap: 30px;
   }
   @media(max-width:768px) {
-    width: 45%;
+    gap: 20px;
   }
 `
 

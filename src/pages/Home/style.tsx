@@ -44,6 +44,7 @@ export const ImgWrapper = styled.div`
       text-align: start;
       left: 35%;
       width: 60%;
+      top:35%;
     }
   }
   @media (max-width: 768px) {
@@ -57,8 +58,8 @@ export const AllFlatWrapper = styled.div`
   background-color: ${colors.grey};
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 20px;
-  gap: 40px;
+  padding: 50px;
+  gap: 45px;
   border-radius: 20px;
   @media (max-width: 1200px) {
     grid-template-columns: 1fr 1fr;
