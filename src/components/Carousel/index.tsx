@@ -2,7 +2,7 @@ import arrowRight from '../../assets/arrowCarouselRight.png'
 import arrowLeft from '../../assets/arrowCarouselLeft.png'
 import { useState } from 'react'
 import { CarouselWrapper, Picture, ArrowWrapper } from './style'
-import { CarouselProps } from '../../utils/interface'
+import { CarouselProps } from '../../store/interface'
 
 function Carousel({ pictures }: CarouselProps) {
   const [picture, setPicture] = useState(0)

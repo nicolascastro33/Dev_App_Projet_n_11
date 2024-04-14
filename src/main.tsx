@@ -7,22 +7,22 @@ import About from './pages/About/index.tsx'
 import Header from './components/Header/index.tsx'
 import Footer from './components/Footer/index.tsx'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import DependenciesContext from './auth/context.ts'
-import { dependencies } from './auth/dependencies.ts'
+import StoreContext from './context/index.ts'
+import { flatStore } from './store/store.ts'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Router>
       <Header />
-      <DependenciesContext.Provider value={dependencies}>
+      <StoreContext.Provider value={flatStore}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/flat/:id" element={<Flat />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<Error />} />
         </Routes>
-      </DependenciesContext.Provider>
+      </StoreContext.Provider>
       <Footer />
     </Router>
   </React.StrictMode>

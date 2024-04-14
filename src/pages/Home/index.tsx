@@ -1,30 +1,29 @@
 import { useEffect, useState, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { HomeWrapper, ImgWrapper, AllFlatWrapper, NoFlatWrapper } from './style'
 import Card from '../../components/Card'
 import image from '../../assets/homeIllustration.png'
-import { HomeWrapper, ImgWrapper, AllFlatWrapper, NoFlatWrapper } from './style'
 import { Loader } from '../../utils/style/loader'
-import { FlatProps } from '../../utils/interface'
-import { useDependencies } from '../../auth/context'
-import { useNavigate } from 'react-router-dom'
+import { useFlatStore } from '../../context'
 
 function Home() {
   const [isDataLoading, setDataLoading] = useState(false)
-  const [flatsData, setFlatsData] = useState<FlatProps[] | []>([])
-  const { flatService } = useDependencies()
   const navigate = useNavigate()
-  console.log(import.meta.env.VITE_REACT_API_URL);
-  
+  const { flats, getAllFlats } = useFlatStore((state) => state)
+
+  // lancer l'action du store permettant d'avoir les flats
   const fetchData = useCallback(async () => {
     setDataLoading(true)
     try {
-      const response = await flatService.FetchAllFlats()
-      response === undefined ? setFlatsData([]) : setFlatsData(response)
+      if (flats.length <= 1) {
+        await getAllFlats()
+      }
     } catch (err) {
       navigate('/error')
     } finally {
       setDataLoading(false)
     }
-  }, [navigate, flatService])
+  }, [flats, getAllFlats, navigate])
 
   useEffect(() => {
     document.title = 'Kasa - Bienvenue!'
@@ -41,7 +40,7 @@ function Home() {
             <img src={image} alt="photo d'un paysage" />
             <h1>Chez vous, partout et ailleurs</h1>
           </ImgWrapper>
-          {flatsData.length === 0 ? (
+          {flats.length === 0 ? (
             <NoFlatWrapper>
               <h2>
                 Il n'y a aucun appartement de disponible, veuillez réessayer
@@ -50,7 +49,7 @@ function Home() {
             </NoFlatWrapper>
           ) : (
             <AllFlatWrapper>
-              {flatsData.map((flat, index) => (
+              {flats.map((flat, index) => (
                 <Card
                   key={`flat-${index}-${flat.id}`}
                   title={flat.title}

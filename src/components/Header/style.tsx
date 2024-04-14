@@ -8,7 +8,6 @@ interface StyledProps {
 
 export const HeaderWrapper = styled.header`
   display: flex;
-  flex: 3 1;
   justify-content: space-between;
   align-items: center;
   margin: 50px 100px 50px 100px;

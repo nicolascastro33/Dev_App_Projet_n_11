@@ -1,11 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { FlatProps } from '../../utils/interface'
 import Carousel from '../../components/Carousel'
 import Collapse from '../../components/Collapse'
-import EmptyStar from '../../assets/emptyStar.png'
-import { useDependencies } from '../../auth/context'
-import Star from '../../assets/fullStar.png'
+import Star from '../../components/Star'
 import {
   FlatWrapper,
   TextWrapper,
@@ -14,27 +11,38 @@ import {
   Tag,
   OwnerInfo,
   Owner,
-  Stars,
   CollapseWrapper,
 } from './style'
 import { Loader } from '../../utils/style/loader'
+import { useFlatStore } from '../../context'
 
 function Flat() {
   const [isDataLoading, setDataLoading] = useState(false)
-  const [flatData, setFlatData] = useState<FlatProps | undefined>()
-  const { flatService } = useDependencies()
+  const { flats, getFlatById, searchFlatById } = useFlatStore((state) => state)
   const id = useLocation().pathname.slice(6)
   const navigate = useNavigate()
 
+  // Si pas de data déjà présent, lancer l'action du store permettant de charger un flat
   useEffect(() => {
     async function fetchData() {
       setDataLoading(true)
+      // Check le bug sur le changement d'id sur l'url
       try {
-        const flat = await flatService.FetchOneFlat(id)
-        setFlatData(flat)
-        if (!flat) {
-          navigate('/error')
-          document.title = `Kasa - Erreur`
+        if (flats.length > 1) {
+          await getFlatById(id)
+          return
+        }
+        if (flats.length === 1 && flats[0].id !== id) {
+          await searchFlatById(id)
+          return
+        }
+        if (flats.length === 0) {
+          await searchFlatById(id)
+          if (flats.length === 0) {
+            navigate('/error')
+            document.title = `Kasa - Erreur`
+          }
+          return
         }
       } catch (err) {
         navigate('/error')
@@ -44,27 +52,23 @@ function Flat() {
       }
     }
     fetchData()
-    document.title = `Kasa - Appartement de ${flatData?.host.name}`
-  }, [flatData, id, navigate, flatService])
+    document.title = `Kasa - Appartement de ${flats[0]?.host.name}`
+  }, [flats, getFlatById, id, navigate, searchFlatById])
 
-  const rating = []
-  for (let i = 0; i < 5; i++) {
-    rating.push(rating.length < Number(flatData?.rating) ? Star : EmptyStar)
-  }
-
+  console.log(flats[0])
   return (
     <FlatWrapper>
       {isDataLoading ? (
         <Loader />
       ) : (
         <>
-          {flatData && <Carousel pictures={flatData.pictures} />}
+          {flats && <Carousel pictures={flats[0].pictures} />}
           <TextWrapper>
             <FlatInfo>
-              <h1>{flatData?.title}</h1>
-              <h2>{flatData?.location}</h2>
+              <h1>{flats[0]?.title}</h1>
+              <h2>{flats[0]?.location}</h2>
               <AllTags>
-                {flatData?.tags.map((tag, index) => (
+                {flats[0]?.tags.map((tag, index) => (
                   <Tag key={`${tag}-${index}`}>
                     <h3>{tag}</h3>
                   </Tag>
@@ -73,27 +77,23 @@ function Flat() {
             </FlatInfo>
             <OwnerInfo>
               <Owner>
-                <h2>{flatData?.host.name}</h2>
+                <h2>{flats[0]?.host.name}</h2>
                 <div>
                   <img
-                    src={flatData?.host.picture}
-                    alt={`Picture of ${flatData?.host.name}`}
+                    src={flats[0]?.host.picture}
+                    alt={`Picture of ${flats[0]?.host.name}`}
                   />
                 </div>
               </Owner>
-              <Stars>
-                {rating.map((star, index) => (
-                  <img src={star} key={`étoile-${index}`} alt="star" />
-                ))}
-              </Stars>
+              <Star rate={flats[0]?.rating} />
             </OwnerInfo>
           </TextWrapper>
           <CollapseWrapper>
-            {flatData?.description && (
-              <Collapse title="Description" body={flatData.description} />
+            {flats[0]?.description && (
+              <Collapse title="Description" body={flats[0].description} />
             )}
-            {flatData?.equipments && (
-              <Collapse title="Équipements" body={flatData.equipments} />
+            {flats[0]?.equipments && (
+              <Collapse title="Équipements" body={flats[0].equipments} />
             )}
           </CollapseWrapper>
         </>

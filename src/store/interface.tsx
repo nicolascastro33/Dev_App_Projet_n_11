@@ -13,13 +13,3 @@ export interface FlatProps {
   equipments: string[]
   tags: string[]
 }
-
-export interface CarouselProps {
-  pictures: string[]
-}
-
-export interface CardProps {
-    title: string
-    image: string
-    id: string
-  }

@@ -111,16 +111,6 @@ export const Owner = styled.div`
     }
   }
 `
-export const Stars = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  & img {
-    @media (max-width: 768px) {
-      height: 13px;
-    }
-  }
-`
 
 export const CollapseWrapper = styled.div`
   display: grid;

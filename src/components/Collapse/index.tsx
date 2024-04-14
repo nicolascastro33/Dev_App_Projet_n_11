@@ -2,6 +2,7 @@ import Arrow from '../../assets/arrow.png'
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { CollapseWrapper, TitleWrapper, Title, Icon, Body } from './style'
+
 interface CollapseProps {
   title: string
   body: string[] | string
