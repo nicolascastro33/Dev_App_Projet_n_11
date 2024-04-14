@@ -3,11 +3,11 @@ import EmptyStar from '../../assets/emptyStar.png'
 import { Stars } from './style'
 
 interface StarProps {
-  rate:string
+  rate:string|undefined
 }
 
 function Star({rate}: StarProps) {
-  const rating = []
+  const rating:string[] = []
   for (let i = 0; i < 5; i++) {
     rating.push(rating.length < Number(rate) ? FullStar : EmptyStar)
   }

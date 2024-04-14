@@ -4,8 +4,7 @@ import { HomeWrapper, ImgWrapper, AllFlatWrapper, NoFlatWrapper } from './style'
 import Card from '../../components/Card'
 import image from '../../assets/homeIllustration.png'
 import { Loader } from '../../utils/style/loader'
-import { useFlatStore } from '../../context'
-
+import { useFlatStore } from '../../context/context'
 function Home() {
   const [isDataLoading, setDataLoading] = useState(false)
   const navigate = useNavigate()
@@ -15,11 +14,10 @@ function Home() {
   const fetchData = useCallback(async () => {
     setDataLoading(true)
     try {
-      if (flats.length <= 1) {
-        await getAllFlats()
-      }
+      if (!flats) await getAllFlats()
     } catch (err) {
       navigate('/error')
+      document.title = 'Kasa - Error...'
     } finally {
       setDataLoading(false)
     }
@@ -28,7 +26,7 @@ function Home() {
   useEffect(() => {
     document.title = 'Kasa - Bienvenue!'
     fetchData()
-  }, [fetchData])
+  }, [fetchData, flats])
 
   return (
     <HomeWrapper>
@@ -40,7 +38,7 @@ function Home() {
             <img src={image} alt="photo d'un paysage" />
             <h1>Chez vous, partout et ailleurs</h1>
           </ImgWrapper>
-          {flats.length === 0 ? (
+          {flats?.length === 0 ? (
             <NoFlatWrapper>
               <h2>
                 Il n'y a aucun appartement de disponible, veuillez réessayer
@@ -49,7 +47,7 @@ function Home() {
             </NoFlatWrapper>
           ) : (
             <AllFlatWrapper>
-              {flats.map((flat, index) => (
+              {flats?.map((flat, index) => (
                 <Card
                   key={`flat-${index}-${flat.id}`}
                   title={flat.title}
