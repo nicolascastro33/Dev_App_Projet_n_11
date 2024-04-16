@@ -5,6 +5,8 @@ import Card from '../../components/Card'
 import image from '../../assets/homeIllustration.png'
 import { Loader } from '../../utils/style/loader'
 import { useFlatStore } from '../../context/context'
+
+
 function Home() {
   const [isDataLoading, setDataLoading] = useState(false)
   const navigate = useNavigate()
@@ -12,7 +14,6 @@ function Home() {
 
   // lancer l'action du store permettant d'avoir les flats
   const fetchData = useCallback(async () => {
-    setDataLoading(true)
     try {
       if (!flats) await getAllFlats()
     } catch (err) {

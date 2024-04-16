@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Carousel from '../../components/Carousel'
 import Collapse from '../../components/Collapse'
 import Star from '../../components/Star'
@@ -16,35 +16,33 @@ import {
 import { Loader } from '../../utils/style/loader'
 import { useFlatStore } from '../../context/context'
 
+
 function Flat() {
-  const [isDataLoading, setDataLoading] = useState(false)
+  const id = useLocation().pathname.slice(6)
+  const navigate = useNavigate()
+  const [isDataLoading, setDataLoading] = useState(true)
   const [error, setError] = useState(false)
   const { flat, flats, getAllFlats, getFlatInStateById } = useFlatStore(
     (state) => state
   )
-  const id = useLocation().pathname.slice(6)
-  const navigate = useNavigate()
+
+  const fetchData = useCallback(async () => {
+    try {
+      if (!flats) await getAllFlats()
+      if (!flat || flat.id !== id) await getFlatInStateById(id)
+      if (flats && !flats.find((flat) => flat.id === id)) setError(true)
+    } catch (err) {
+      setError(true)
+    } finally {
+      if (error) navigate('/error')
+      if (flat?.id === id) setDataLoading(false)
+    }
+  }, [error, flat, flats, getAllFlats, getFlatInStateById, id, navigate])
 
   useEffect(() => {
-    const fetchData = async () => {
-      setDataLoading(true)
-      try {
-        if (!flats) await getAllFlats()
-        if (!flat || flat.id !== id) await getFlatInStateById(id)
-      } catch (err) {
-        setError(true)
-      } finally {
-        if (flats && !flats.find((flat) => flat.id === id)) setError(true)
-        setDataLoading(false)
-      }
-    }
     fetchData()
     document.title = `Kasa - Appartement de ${flat?.host.name}`
-  }, [flat, flats, getAllFlats, getFlatInStateById, id])
-
-  if (error) {
-    navigate('/error')
-  }
+  }, [fetchData, flat?.host.name])
 
   return (
     <FlatWrapper>

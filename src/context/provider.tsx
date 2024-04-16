@@ -1,8 +1,8 @@
 import { type ReactNode, useRef } from 'react'
 import { FlatStore } from '../store/flat.slice'
 import { type StoreApi } from 'zustand'
-import { createFlatSlice } from '../store/flat.slice'
 import StoreContext from './context'
+import { store } from '../store/store'
 
 export interface FlatStoreProviderProps {
   children: ReactNode
@@ -13,7 +13,7 @@ export const FlatStoreProvider = ({
 }: FlatStoreProviderProps) => {
   const storeRef = useRef<StoreApi<FlatStore>>()
   if (!storeRef.current) {
-    storeRef.current = createFlatSlice()
+    storeRef.current = store
   }
 
   return (

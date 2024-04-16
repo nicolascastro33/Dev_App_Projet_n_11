@@ -1,40 +1,29 @@
 import { StateCreator } from 'zustand'
 import { FlatProps } from './interface'
 
-export interface FlatState {
-  flats: FlatProps[]
+export type FlatState = {
+  flats: FlatProps[] | undefined
+  flat: FlatProps | undefined
+}
+export type FlatActions = {
   getAllFlats: () => void
   getFlatById: (flatId: string) => void
 }
 
-export const createFlatSlice: StateCreator<FlatState> = (set, get) => ({
-  flats: [],
+export type FlatStore = FlatState & FlatActions
+
+export const createFlatSlice: StateCreator<FlatStore, [], [], FlatStore> = (
+  set
+) => ({
+  flats: undefined,
+  flat: undefined,
   getAllFlats: async () => {
-    const data = get().flats
-    if (data && data.length <= 1) {
-      const newFlats = await FlatFetchAPI.fetchAllFlats()
-      set(() => ({ flats: newFlats }))
-    }
+    const allFlats = await FlatFetchAPI.fetchAllFlats()
+    set(() => ({ flats: allFlats }))
   },
   getFlatById: async (flatId: string) => {
-    let newFlat: FlatProps[] | undefined = []
-    const data = get().flats
-
-    if (data && data.length > 1) {
-      const oneFlat = data.find((flat) => flat.id === flatId)
-      newFlat = oneFlat ? [oneFlat] : []
-      set(() => ({ flats: newFlat }))
-      return
-    }
-
-    if (data && data.length === 1 && data[0].id !== flatId) {
-      const oneFlat = await FlatFetchAPI.fetchOneFlat(flatId)
-      newFlat = oneFlat ? [oneFlat] : []
-      set(() => ({ flats: newFlat }))
-      return
-    }
-
-    set(() => ({ flats: [] }))
+    const flatById = await FlatFetchAPI.fetchOneFlat(flatId)
+    set(() => ({ flat: flatById }))
   },
 })
 
@@ -48,7 +37,7 @@ export const FlatFetchAPI: FlatsApiService = {
     try {
       const url = import.meta.env.VITE_REACT_API_URL
       const response = await fetch(url)
-      return await response.json
+      return response.json()
     } catch (err) {
       console.error(err)
       throw err
@@ -58,7 +47,7 @@ export const FlatFetchAPI: FlatsApiService = {
     try {
       const url = import.meta.env.VITE_REACT_API_URL
       const response = await fetch(`${url}/${flatId}`)
-      return await response.json
+      return response.json()
     } catch (err) {
       console.error(err)
       throw err
