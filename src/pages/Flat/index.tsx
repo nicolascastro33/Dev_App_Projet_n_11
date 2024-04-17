@@ -16,28 +16,27 @@ import {
 import { Loader } from '../../utils/style/loader'
 import { useFlatStore } from '../../context/context'
 
-
 function Flat() {
   const id = useLocation().pathname.slice(6)
   const navigate = useNavigate()
   const [isDataLoading, setDataLoading] = useState(true)
   const [error, setError] = useState(false)
-  const { flat, flats, getAllFlats, getFlatInStateById } = useFlatStore(
-    (state) => state
-  )
+  const { flat, getOneFlat } = useFlatStore((state) => state)
 
+  // lancer l'action du store permettant d'avoir les flats (si pas présent dans le store)
+  // Et ensuite lance l'action du store permettant d'avoir le flat en question par son ID (si pas présent dans le store)
   const fetchData = useCallback(async () => {
     try {
-      if (!flats) await getAllFlats()
-      if (!flat || flat.id !== id) await getFlatInStateById(id)
-      if (flats && !flats.find((flat) => flat.id === id)) setError(true)
+      await getOneFlat(id)
     } catch (err) {
       setError(true)
     } finally {
+      // Si erreur ou le flat n'existe pas: envoie vers la page erreur
+      // Si tout est ok: termine le loader et affiche le flat
       if (error) navigate('/error')
       if (flat?.id === id) setDataLoading(false)
     }
-  }, [error, flat, flats, getAllFlats, getFlatInStateById, id, navigate])
+  }, [error, flat, getOneFlat, id, navigate])
 
   useEffect(() => {
     fetchData()

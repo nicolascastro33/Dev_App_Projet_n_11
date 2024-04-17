@@ -27,7 +27,7 @@ function Card({ title, image, id }: CardProps) {
 Card.prototypes = {
   title: Proptypes.string.isRequired,
   image: Proptypes.string,
-  id: Proptypes.string,
+  id: Proptypes.string.isRequired,
 }
 
 Card.defaultProps = {

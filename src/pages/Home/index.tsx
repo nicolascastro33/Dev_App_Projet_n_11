@@ -8,21 +8,21 @@ import { useFlatStore } from '../../context/context'
 
 
 function Home() {
-  const [isDataLoading, setDataLoading] = useState(false)
+  const [isDataLoading, setDataLoading] = useState(true)
   const navigate = useNavigate()
   const { flats, getAllFlats } = useFlatStore((state) => state)
-
+  
   // lancer l'action du store permettant d'avoir les flats
   const fetchData = useCallback(async () => {
     try {
-      if (!flats) await getAllFlats()
+      await getAllFlats()
     } catch (err) {
       navigate('/error')
       document.title = 'Kasa - Error...'
     } finally {
       setDataLoading(false)
     }
-  }, [flats, getAllFlats, navigate])
+  }, [getAllFlats, navigate])
 
   useEffect(() => {
     document.title = 'Kasa - Bienvenue!'

@@ -6,7 +6,7 @@ export const HomeWrapper = styled.main`
   margin: 0px 100px 50px 100px;
   display: flex;
   flex-direction: column;
-  min-height: 50vh;
+  min-height: 65vh;
   @media (max-width: 768px) {
     margin: 0px 20px 30px 20px;
   }

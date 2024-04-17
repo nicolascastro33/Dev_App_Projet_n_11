@@ -5,8 +5,9 @@ export const AboutWrapper = styled.main`
   margin: 0px 100px 30px 100px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
+  min-height: 60vh;
+
   @media (max-width: 768px) {
     margin: 0px 20px 20px 20px;
   }

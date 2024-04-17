@@ -1,6 +1,6 @@
 import { StateCreator } from 'zustand'
-import { FlatProps } from './interface'
-import flats from '../data/flat.json'
+import { FlatProps } from '../interface'
+import { FlatJsonFile } from '../fetch/fetch.json'
 
 export type FlatState = {
   flats: FlatProps[] | undefined
@@ -8,37 +8,36 @@ export type FlatState = {
 }
 export type FlatActions = {
   getAllFlats: () => void
-  getFlatInStateById: (flatId: string) => void
+  getOneFlat: (flatId: string) => void
 }
 
 export type FlatStore = FlatState & FlatActions
 
-export const createFlatSlice:StateCreator<
-FlatStore,
-[],
-[],
-FlatStore
-> = (set, get) => ({
+export const createFlatSlice: StateCreator<FlatStore, [], [], FlatStore> = (
+  set,
+  get
+) => ({
   flats: undefined,
   flat: undefined,
   getAllFlats: async () => {
-    const newFlats = await FlatJsonFile.fetchAllFlats()
-    set(() => ({ flats: newFlats }))
+    if (!get().flats) {
+      await set(() => ({ flats: FlatJsonFile.fetchAllFlats() }))
+    }
   },
-  getFlatInStateById: async (flatId: string) => {
-    const getFlats = get().flats
-    const flatById = getFlats?.find((flat) => flat.id === flatId)
-    set(() => ({ flat: flatById }))
+  getOneFlat: async (flatId: string) => {
+    // On vérifie si des données sont présentes dans le store avant de les récupérer
+    // Ou  sinon on récupère directement le flat désiré depuis la base de donnée JSON
+    if (get().flats) {
+      await set(() => ({
+        flat: get().flats?.find((flat) => flat.id === flatId),
+      }))
+    } else if (get().flat?.id !== flatId || !get().flat) {
+      await set(() => ({ flat: FlatJsonFile.fetchOneFlat(flatId) }))
+    }
+    // Si aucune donnée n'est présente, on envoie une erreur
+    if (!get().flat) {
+      throw new Error('Impossible de récupérer le logement')
+    }
   },
 })
 
-
-export type FlatsApiService = {
-  fetchAllFlats(): FlatProps[] | undefined
-}
-
-export const FlatJsonFile: FlatsApiService = {
-  fetchAllFlats: () => {
-    return flats
-  },
-}
