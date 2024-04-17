@@ -3,7 +3,7 @@ import EmptyStar from '../../assets/emptyStar.png'
 import { Stars } from './style'
 
 interface StarProps {
-  rate:string|undefined
+  rate:string
 }
 
 function Star({rate}: StarProps) {

@@ -49,7 +49,7 @@ function Flat() {
         <Loader />
       ) : (
         <>
-          {flat && <Carousel pictures={flat.pictures} />}
+          {flat?.pictures && <Carousel pictures={flat.pictures} />}
           <TextWrapper>
             <FlatInfo>
               <h1>{flat?.title}</h1>
@@ -72,7 +72,7 @@ function Flat() {
                   />
                 </div>
               </Owner>
-              <Star rate={flat?.rating} />
+              {flat?.rating &&<Star rate={flat?.rating} /> }
             </OwnerInfo>
           </TextWrapper>
           <CollapseWrapper>
