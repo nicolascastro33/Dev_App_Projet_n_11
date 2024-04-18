@@ -26,6 +26,7 @@ function Flat() {
   // lancer l'action du store permettant d'avoir les flats (si pas présent dans le store)
   // Et ensuite lance l'action du store permettant d'avoir le flat en question par son ID (si pas présent dans le store)
   const fetchData = useCallback(async () => {
+    setDataLoading(true)
     try {
       await getOneFlat(id)
     } catch (err) {

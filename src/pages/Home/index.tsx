@@ -14,6 +14,7 @@ function Home() {
   
   // lancer l'action du store permettant d'avoir les flats
   const fetchData = useCallback(async () => {
+    setDataLoading(true)
     try {
       await getAllFlats()
     } catch (err) {
